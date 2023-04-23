@@ -1,18 +1,18 @@
 const axios = require('axios');
-require('dotenv').config();
-const personalToken = process.env.GITHUB_PERSONAL_TOKEN;
+const conf = require('../config');
+
+const sharedOptions = {
+  headers:{
+    Authorization: `token ${conf.GITHUB_PERSONAL_TOKEN}`,
+    Accept: 'application/vnd.github.hellcat-preview+json'
+  }
+}
 
 async function getUser (login) {
   try {
-    const url = 'https://api.github.com/users/' + login;
-    const config = {
-      headers:{
-        Authorization: `token ${personalToken}`,
-        Accept: 'application/vnd.github.hellcat-preview+json'
-      }
-    };
+    const url = conf.githubApiBaseUrl + '/users/' + login;
   
-    const res = await axios.get(url, config);
+    const res = await axios.get(url, sharedOptions);
     return res.data;
   } catch (error) {
     throw new Error(error);
@@ -20,4 +20,27 @@ async function getUser (login) {
 }
 
 
-module.exports = { getUser };
+async function getCurrentUser (token) {
+  try {
+    const url = conf.githubApiBaseUrl + '/user';
+    const headers =  {...sharedOptions.headers, Authorization: `Bearer ${token}`}
+    const res = await axios.get(url, {headers});
+    return res.data;
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
+async function getOrgInstructors () {
+  try {
+    const url = `${conf.githubApiBaseUrl}/orgs/${conf.GITHUB_ORG_NAME}/teams/staff-instructors/members`;
+
+    const res = await axios.get(url, sharedOptions);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
+module.exports = { getUser, getCurrentUser, getOrgInstructors };

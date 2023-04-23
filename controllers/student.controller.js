@@ -3,15 +3,15 @@ const { getUser } = require("../utils/githubAPI");
 
 async function getStudentInfo (req, res) {
   try {
-    const { gitHubLogin, cohort } = req.body;
-    const student = await Student.find({ gitHubLogin });
-    if (student) res.send(student)
+    const { login, cohort } = req.query;
+    const student = await Student.findOne({ gitHubLogin: login });
+    if (student) res.send(student);
     else {
-      const user = getUser(gitHubLogin);
+      const user = await getUser(login);
       const studentInfo = {
-        gitHubLogin,
+        gitHubLogin: login,
         cohort,
-        name: user.name ? user.name : gitHubLogin,
+        name: user.name ? user.name : login,
         imgUrl: user.avatar_url
       }
 
