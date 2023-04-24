@@ -1,5 +1,32 @@
+const Student = require("../models/student.model");
 const StudentReport = require("../models/studentReport.model");
 const { validateMarks } = require("../utils/marksHelper");
+
+async function getCohortReports (req, res) {
+  try {
+    const { cohort, type } = req.query;
+    const students = await Student.find({cohort});
+    const studentIds = students.map(student => student._id);
+    const reports = await StudentReport.find({_id: {$in: studentIds}, type});
+    res.status(200).send(reports);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+}
+
+
+async function getStudentReport (req, res) {
+  try {
+    const { studentId, type } = req.query;
+    const report = await StudentReport.findOne({studentId, type});
+    res.status(200).send(report);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+}
+
 
 async function addStudentReport (req, res) {
   try {
@@ -44,4 +71,4 @@ async function updateReport (req, res) {
 }
 
 
-module.exports = { addStudentReport, updateReport };
+module.exports = { addStudentReport, getCohortReports, getStudentReport, updateReport };

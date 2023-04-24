@@ -9,5 +9,8 @@ router.post('/github-access', gitHubController.getGitHubAccessToken);
 
 router.get('/student', authMiddleware, studentController.getStudentInfo);
 router.post('/report', authMiddleware, reportController.addStudentReport);
+router.post('/update/report/:id', authMiddleware, reportController.updateReport);
+router.get('/report/cohort', authMiddleware, reportController.getCohortReports);
+router.get('/report/student', authMiddleware, reportController.getStudentReport);
 
 module.exports = router;
