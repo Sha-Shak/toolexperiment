@@ -1,7 +1,7 @@
 const { model, Schema } = require('mongoose');
 
 const studentSchema = new Schema({
-  gitHubLogin: {
+  githubLogin: {
     type: String,
     required: true
   },

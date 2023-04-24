@@ -9,7 +9,7 @@ async function getStudentInfo (req, res) {
     else {
       const user = await getUser(login);
       const studentInfo = {
-        gitHubLogin: login,
+        githubLogin: login,
         cohort,
         name: user.name ? user.name : login,
         imgUrl: user.avatar_url
