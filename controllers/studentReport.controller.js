@@ -7,11 +7,13 @@ async function getCohortReports (req, res) {
     const { cohort, type } = req.query;
     const students = await Student.find({cohort});
     const studentIds = students.map(student => student._id);
-    const reports = await StudentReport.find({_id: {$in: studentIds}, type});
+    const reports = await StudentReport.find({studentId: {$in: studentIds}, type});
     const parsedReports = reports.map(report => {
-      const student = students.find(st => st._id === report.studentId);
-      return {...report, ...student};
-    })
+      const index = students.findIndex(st => st._id == report.studentId);
+      const { name, githubLogin, cohort, imgUrl } = students[index];
+      return {report, name, githubLogin, cohort, imgUrl };
+    });
+
     res.status(200).send(parsedReports);
   } catch (error) {
     console.log(error);
