@@ -4,7 +4,7 @@ const { getUser } = require("../utils/githubAPI");
 async function getStudentInfo (req, res) {
   try {
     const { login, cohort } = req.query;
-    const student = await Student.findOne({ gitHubLogin: login });
+    const student = await Student.findOne({ githubLogin: login });
     if (student) res.send(student);
     else {
       const user = await getUser(login);
