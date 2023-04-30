@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const { circleCIWebHook } = require('./controllers/circleCI.controller');
 const gitHubController = require('./controllers/github.controller');
 const studentController = require('./controllers/student.controller');
 const reportController = require('./controllers/studentReport.controller');
@@ -12,5 +13,8 @@ router.post('/report', authMiddleware, reportController.addStudentReport);
 router.put('/update/report/:id', authMiddleware, reportController.updateReport);
 router.get('/report/cohort', authMiddleware, reportController.getCohortReports);
 router.get('/report/student', authMiddleware, reportController.getStudentReport);
+
+// Circle CI
+router.post('/tp-tests', circleCIWebHook)
 
 module.exports = router;
