@@ -5,7 +5,7 @@ const testStatusSchema = new Schema({
     type: String,
     required: true
   },
-  repo: {
+  repoSlug: {
     type: String,
     required: true
   },

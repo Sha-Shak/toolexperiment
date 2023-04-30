@@ -5,20 +5,25 @@ async function syncWithGithub (req, res) {
   try {
     const { cohort } = req.query;
     const members = await getTeamMembers(cohort);
-    console.log(members)
     
     for (let i = 0; i < members.length; i++) {
       const user = members[i];
 
-      const studentInfo = {
-        githubLogin: user.login,
-        cohort,
-        name: user.name ? user.name : user.login,
-        imgUrl: user.avatar_url
+      const student = await Student.findOne({ githubLogin: user.login});
+
+      if (!student) {
+        const studentInfo = {
+          githubLogin: user.login,
+          cohort,
+          name: user.name ? user.name : user.login,
+          imgUrl: user.avatar_url
+        }
+        
+        await Student.create(studentInfo);
       }
-      
-      await Student.create(studentInfo);
     }
+
+    res.status(201).send(`Synced students of ${cohort} cohort.`);
   } catch (error) {
     console.log(error);
     res.status(500).send(error);

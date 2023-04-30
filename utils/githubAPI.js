@@ -46,7 +46,7 @@ async function getOrgInstructors () {
 async function getTeamMembers (teamSlug) {
   try {
     const url = `${conf.githubApiBaseUrl}/orgs/${conf.GITHUB_ORG_NAME}/teams/${teamSlug}/members`;
-    const res = await axios.get(url);
+    const res = await axios.get(url, sharedOptions);
     const members = res.data;
 
     const result = []
