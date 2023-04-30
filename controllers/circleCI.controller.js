@@ -10,7 +10,13 @@ async function circleCIWebHook (req, res) {
     const student = await Student.findOne({ githubLogin });
 
     if (student) {
-      await TestStatus.create({studentId: student._id, repoSlug, status});
+      const existingStatus = await TestStatus.findOne({studentId: student._id, repoSlug});
+
+      if (existingStatus) {
+        await TestStatus.findByIdAndUpdate(existingStatus._id, {$set: { status }});
+      } else {
+        await TestStatus.create({studentId: student._id, repoSlug, status});
+      }
       res.status(201).send('OK');
     } else {
       res.send('Student does not exist.');

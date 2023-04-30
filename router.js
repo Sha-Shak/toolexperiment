@@ -3,6 +3,7 @@ const { circleCIWebHook } = require('./controllers/circleCI.controller');
 const gitHubController = require('./controllers/github.controller');
 const studentController = require('./controllers/student.controller');
 const reportController = require('./controllers/studentReport.controller');
+const { getTestStatusesForARepo } = require('./controllers/testStatus.controller');
 const authMiddleware = require('./middleware/auth.middleware');
 
 router.get('/', (req, res) => {res.send('Project Code - Instructor Tool Server')});
@@ -16,9 +17,9 @@ router.get('/report/student', authMiddleware, reportController.getStudentReport)
 
 // Circle CI
 router.post('/webhook/circleci', circleCIWebHook);
+router.get('/test/status', authMiddleware, getTestStatusesForARepo);
 
 // Student Sync
-
 router.get('/sync', studentController.syncWithGithub);
 
 module.exports = router;
