@@ -43,4 +43,23 @@ async function getOrgInstructors () {
 }
 
 
-module.exports = { getUser, getCurrentUser, getOrgInstructors };
+async function getTeamMembers (teamSlug) {
+  try {
+    const url = `${conf.githubApiBaseUrl}/orgs/${conf.GITHUB_ORG_NAME}/teams/${teamSlug}/members`;
+    const res = await axios.get(url);
+    const members = res.data;
+
+    const result = []
+    for (let i = 0; i < members.length; i++) {
+      const infoRes = await axios.get(members[i].url);
+      result.push(infoRes.data);
+    }
+
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
+module.exports = { getUser, getCurrentUser, getOrgInstructors, getTeamMembers };

@@ -15,6 +15,10 @@ router.get('/report/cohort', authMiddleware, reportController.getCohortReports);
 router.get('/report/student', authMiddleware, reportController.getStudentReport);
 
 // Circle CI
-router.post('/tp-tests', circleCIWebHook)
+router.post('/webhook/circleci', circleCIWebHook);
+
+// Student Sync
+
+router.get('/sync', studentController.syncWithGithub);
 
 module.exports = router;

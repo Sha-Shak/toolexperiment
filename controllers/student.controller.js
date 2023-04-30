@@ -1,5 +1,29 @@
 const Student = require("../models/student.model");
-const { getUser } = require("../utils/githubAPI");
+const { getUser, getTeamMembers } = require("../utils/githubAPI");
+
+async function syncWithGithub (req, res) {
+  try {
+    const { cohort } = req.query;
+    const members = await getTeamMembers(cohort);
+    console.log(members)
+    
+    for (let i = 0; i < members.length; i++) {
+      const user = members[i];
+
+      const studentInfo = {
+        githubLogin: user.login,
+        cohort,
+        name: user.name ? user.name : user.login,
+        imgUrl: user.avatar_url
+      }
+      
+      await Student.create(studentInfo);
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+}
 
 async function getStudentInfo (req, res) {
   try {
@@ -39,4 +63,4 @@ async function updateStudentCohort (req, res) {
 }
 
 
-module.exports = { getStudentInfo, updateStudentCohort };
+module.exports = { getStudentInfo, updateStudentCohort, syncWithGithub };
