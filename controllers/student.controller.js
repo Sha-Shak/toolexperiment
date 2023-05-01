@@ -1,15 +1,15 @@
 const Student = require("../models/student.model");
 const { getUser, getTeamMembers } = require("../utils/githubAPI");
 
-async function syncWithGithub (req, res) {
+async function syncWithGithub(req, res) {
   try {
     const { cohort } = req.query;
     const members = await getTeamMembers(cohort);
-    
+
     for (let i = 0; i < members.length; i++) {
       const user = members[i];
 
-      const student = await Student.findOne({ githubLogin: user.login});
+      const student = await Student.findOne({ githubLogin: user.login });
 
       if (!student) {
         const studentInfo = {
@@ -18,7 +18,7 @@ async function syncWithGithub (req, res) {
           name: user.name ? user.name : user.login,
           imgUrl: user.avatar_url
         }
-        
+
         await Student.create(studentInfo);
       }
     }
@@ -30,7 +30,7 @@ async function syncWithGithub (req, res) {
   }
 }
 
-async function getStudentInfo (req, res) {
+async function getStudentInfo(req, res) {
   try {
     const { login, cohort } = req.query;
     const student = await Student.findOne({ githubLogin: login });
@@ -55,11 +55,11 @@ async function getStudentInfo (req, res) {
 }
 
 
-async function updateStudentCohort (req, res) {
+async function updateStudentCohort(req, res) {
   try {
     const { id } = req.params;
     const { cohort } = req.body;
-    const updatedStudent = await Student.findByIdAndUpdate(id, {$set: {cohort}}, {new: true});
+    const updatedStudent = await Student.findByIdAndUpdate(id, { $set: { cohort } }, { new: true });
     res.status(205).send(updatedStudent);
   } catch (error) {
     console.log(error);
@@ -68,4 +68,16 @@ async function updateStudentCohort (req, res) {
 }
 
 
-module.exports = { getStudentInfo, updateStudentCohort, syncWithGithub };
+async function getStudentsInCohort(req, res) {
+  try {
+    const { cohort } = req.query;
+    const students = await Student.find({ cohort });
+    res.send(students);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+}
+
+
+module.exports = { getStudentInfo, getStudentsInCohort, updateStudentCohort, syncWithGithub };

@@ -10,6 +10,7 @@ router.get('/', (req, res) => {res.send('Project Code - Instructor Tool Server')
 router.post('/github-access', gitHubController.getGitHubAccessToken);
 
 router.get('/student', authMiddleware, studentController.getStudentInfo);
+router.get('/cohort/students', authMiddleware, studentController.getStudentsInCohort);
 router.post('/report', authMiddleware, reportController.addStudentReport);
 router.put('/update/report/:id', authMiddleware, reportController.updateReport);
 router.get('/report/cohort', authMiddleware, reportController.getCohortReports);
