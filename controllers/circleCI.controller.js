@@ -20,7 +20,7 @@ async function circleCIWebHook (req, res) {
 
       if (existingStatus) {
         if (existingStatus.status === "failed" && (testStatus !== "failed"))
-          await TestStatus.findByIdAndUpdate(existingStatus._id, {$set: { status }});
+          await TestStatus.findByIdAndUpdate(existingStatus._id, {$set: { status: testStatus }});
       } else {
         await TestStatus.create({studentId: student._id, repoSlug, status: testStatus});
       }
