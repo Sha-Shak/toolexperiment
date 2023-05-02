@@ -6,16 +6,15 @@ const { getStatus } = require("../utils/testHelper");
 async function circleCIWebHook (req, res) {
   try {
     const { origin_repository_url } = req.body.pipeline.vcs;
-    const { happened_at } = req.body;
     const [ githubLogin, repoSlug ] = origin_repository_url.split('/').slice(-2);
-    const { status } = req.body.job;
+    const { status, started_at } = req.body.job;
 
     const student = await Student.findOne({ githubLogin });
 
     if (student) {
       
       const repo = await TestRepo.findOne({ repoSlug });
-      const testStatus = getStatus(repo.startTime, repo.duration, happened_at, status);
+      const testStatus = getStatus(repo.startTime, repo.duration, started_at, status);
       const existingStatus = await TestStatus.findOne({studentId: student._id, repoSlug});
 
       if (existingStatus) {
