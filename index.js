@@ -6,8 +6,11 @@ const conf = require('./config');
 
 const app = express();
 
-app.use(cors());
-app.use(express.json());
+app.use(
+  cors({ origin: ["http://localhost:3000", "https://webhooks.typeform.com"] })
+);
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(router);
 
 (async function bootstrap () {

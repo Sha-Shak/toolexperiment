@@ -1,0 +1,22 @@
+# fly.toml app configuration file generated for tool on 2023-05-04T13:08:56+06:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "tool"
+primary_region = "sin"
+
+[env]
+  GITHUB_CLIENT_ID= "d93d34257fd0a5620b90"
+  GITHUB_CLIENT_SECRET= "de8bd4a58a033b9e4e5a12f3ac00b760b62ea2d4"
+  GITHUB_PERSONAL_TOKEN= "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"
+  GITHUB_ORG_NAME="Project-Code-Bd"
+  MONGOOSE_URI="mongodb+srv://instructors:S88cB7qFiHyVr4kf@cluster0.dmsvd5g.mongodb.net/project-code-tool?retryWrites=true&w=majority"
+
+  PORT = "8080"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
