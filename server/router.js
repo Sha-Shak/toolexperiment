@@ -1,4 +1,4 @@
-const { FormResponse } = require("./models/typeform.model");
+const FormResponse = require("./models/typeform.model");
 const router = require("express").Router();
 const { circleCIWebHook } = require("./controllers/circleCI.controller");
 const gitHubController = require("./controllers/github.controller");
@@ -47,15 +47,8 @@ router.post("/typeform-webhook", (req, res) => {
     })),
   });
 
-  newFormResponse.save((err, savedResponse) => {
-    if (err) {
-      console.error(err);
-      res.sendStatus(500);
-    } else {
-      console.log(savedResponse);
-      res.sendStatus(200);
-    }
-  });
+  newFormResponse.save();
+  res.send();
 });
 
 // Student Sync
