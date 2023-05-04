@@ -1,0 +1,83 @@
+[
+    {
+      "name": "Mid Junior",
+      "dbName": "mid-junior",
+      "fields": [
+        "Positive Attitude",
+        "Productivity",
+        "Autonomy",
+        "Communication",
+        "Teamwork",
+        "Self Improvement",
+        "Open Mindedness",
+        "Curiosity",
+        "Clean Code",
+        "Efficient Code",
+        "Reliable Code",
+        "Javascript"
+      ]
+    },
+    {
+      "name": "End Junior",
+      "dbName": "end-junior",
+      "fields": [
+        "Positive Attitude",
+        "Productivity",
+        "Autonomy",
+        "Communication",
+        "Teamwork",
+        "Self Improvement",
+        "Open Mindedness",
+        "Curiosity",
+        "Clean Code",
+        "Efficient Code",
+        "Reliable Code",
+        "Javascript",
+        "Back-end",
+        "Database",
+        "Front-end"
+      ]
+    },
+    {
+      "name": "Mid Senior",
+      "dbName": "mid-senior",
+      "fields": [
+        "Positive Attitude",
+        "Productivity",
+        "Autonomy",
+        "Communication",
+        "Teamwork",
+        "Self Improvement",
+        "Open Mindedness",
+        "Curiosity",
+        "Clean Code",
+        "Efficient Code",
+        "Reliable Code",
+        "Javascript",
+        "Back-end",
+        "Database",
+        "Front-end"
+      ]
+    },
+    {
+      "name": "End Senior",
+      "dbName": "end-senior",
+      "fields": [
+        "Positive Attitude",
+        "Productivity",
+        "Autonomy",
+        "Communication",
+        "Teamwork",
+        "Self Improvement",
+        "Open Mindedness",
+        "Curiosity",
+        "Clean Code",
+        "Efficient Code",
+        "Reliable Code",
+        "Javascript",
+        "Back-end",
+        "Database",
+        "Front-end"
+      ]
+    }
+]
